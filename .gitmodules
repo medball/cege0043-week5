@@ -1,0 +1,9 @@
+[submodule "ucfajfe/www/images"]
+	path = ucfajfe/www/images
+	url = https://github.com/medball/cege0043-imagesReference.git
+[submodule "ucfajfe/www/css"]
+	path = ucfajfe/www/css
+	url = https://github.com/medball/cege0043-cssReference.git
+[submodule "ucfajfe/www/js"]
+	path = ucfajfe/www/js
+	url = https://github.com/medball/cege0043-jsReference.git
