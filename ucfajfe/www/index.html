@@ -1,60 +1,58 @@
-<!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Hello World</title>
+<title>Leaflet and Javascript Example</title>
+<!-- the following links add the CSS and Javascript required for the Leaflet Map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+crossorigin=""></script>
+<!-- the following CSS is used to set the size of the Map -->
+<style type="text/css">
+#mapid { height: 180px; }
+</style>
 </head>
-
 <body>
-    <div class="app">
-        <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
-        </div>
-    </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
+<!-- the mapid div will hold the map -->
+<div id="mapid" style="width: 1200px; height: 550px;"></div>
+<!-- the following script will load the map and set the default view and zoom, as well as loading the
+basemap tiles -->
+<script>
+// load the map (the last number refers to the scale - the larger the number, the more zoomed in the map is)
+var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+// load the tiles
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+id: 'mapbox.streets'
+}).addTo(mymap);
+// adding in a point, triangle and circle before closing the script tag
+// add point
+L.marker([51.5,-0.09]).addTo(mymap).bindPopup("<b>Hello World!</b><br/>I am a popup.").openPopup();
+// add a circle
+L.circle([51.508,-0.11],500,{
+	color: 'red',
+	fillColor: '#f03',
+	fillOpacity: 0.5
+}).addTo(mymap).bindPopup("I am a circle.")
+// add a polygon with 3 end points (triangle)
+var myPolygon=L.polygon([
+	[51.509,-0.08],
+	[51.503,-0.06],
+	[51.51,-0.047]
+	],{
+		color: 'red',
+		fillColor: '#f03',
+		fillOpacity: 0.5
+	}).addTo(mymap).bindPopup("I am a triangle.")
+</script>
+<script src="js/rhMenu.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leafletFunctions.js"></script>
+<script src="js/userTracking.js"></script>
+<script src="js/startup.js"></script>
 </body>
-
 </html>
